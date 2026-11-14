@@ -110,7 +110,7 @@ def main():
         file.write(f"Query: {query}\n")
         file.write(f"Target: {target}\n")
         file.write(f"Score: {M[-1, -1]}\n")
-        file.write(f"Liczba dopasowań: {len(dopasowania)}\n\n")
+        file.write(f"Liczba dopasowan: {len(dopasowania)}\n\n")
 
         for k, (a, b) in enumerate(dopasowania, 1):
             file.write(f"Dopasowanie {k}:\n{a}\n{b}\n\n")

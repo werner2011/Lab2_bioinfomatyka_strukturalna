@@ -1,0 +1,9 @@
+Query: CGCAAATTTGCG
+Target: CGCGAATTCGCG
+Score: 8
+Liczba dopasowan: 1
+
+Dopasowanie 1:
+CGCAAATTTGCG
+CGCGAATTCGCG
+
