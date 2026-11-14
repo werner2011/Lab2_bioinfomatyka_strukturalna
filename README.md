@@ -131,6 +131,6 @@ python Needleman_wunsch_alg.py examples/ubikwityna.fasta --output ubikwityna_out
 
 
 
-## 8. Źródła
+## Źródła
 
 - [RCSB Protein Data Bank](https://www.rcsb.org/) - rekordy struktur [1BNA](https://www.rcsb.org/structure/1BNA), [2DND](https://www.rcsb.org/structure/2DND), [1UBQ](https://www.rcsb.org/structure/1UBQ) i [2RSU](https://www.rcsb.org/structure/2RSU).
