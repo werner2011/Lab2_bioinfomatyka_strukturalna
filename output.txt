@@ -1,0 +1,9 @@
+Query: AACG
+Target: AATCG
+Score: 2
+Liczba dopasowañ: 1
+
+Dopasowanie 1:
+AA-CG
+AATCG
+
