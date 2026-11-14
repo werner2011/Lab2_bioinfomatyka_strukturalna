@@ -1,7 +1,7 @@
 Query: AACG
 Target: AATCG
 Score: 2
-Liczba dopasowañ: 1
+Liczba dopasowan: 1
 
 Dopasowanie 1:
 AA-CG
