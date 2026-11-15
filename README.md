@@ -1,4 +1,4 @@
-# Needleman–Wunsch — globalne dopasowanie sekwencji
+# Laboratorium bioinformatyka strukturalna 
 Punkt II - część projektowa
 Program implementuje w Pythonie algorytm Needlemana–Wunscha, służący do **globalnego dopasowywania dwóch sekwencji biologicznych**. 
 
@@ -83,9 +83,9 @@ AATCG
 
 Algorytm przebiega w trzech etapach:
 
-1. **Inicjalizacja** - utworzenie macierzy `(n+1) x (m+1)` i wypełnienie jej pierwszego wiersza oraz kolumny karami za luki.
-2. **Programowanie dynamiczne** — wypełnianie macierzy maksimum z trzech możliwości: przejścia z przekątnej, z góry i z lewej.
-3. **Traceback** — cofanie od prawego dolnego rogu do `(0, 0)`
+1. **Inicjalizacja** utworzenie macierzy `(n+1) x (m+1)` i wypełnienie jej pierwszego wiersza oraz kolumny karami za luki.
+2. **Programowanie dynamiczne** wypełnianie macierzy maksimum z trzech możliwości: przejścia z przekątnej, z góry i z lewej.
+3. **Traceback** cofanie od prawego dolnego rogu do `(0, 0)`
 
 
 ## 5. Przykłady użycia
@@ -104,7 +104,7 @@ Cztery identyczne symbole i jedna luka: `4 × (+1) + (−2) = 2`.
 python Needleman_wunsch_alg.py examples/para_sekwencji.fasta --output output.txt
 ```
 
-### 5.2. Dodekamery DNA — `DNA_ex.fasta`
+### 5.2. `DNA_ex.fasta`
 
 Sekwencje pochodzą ze struktur zdeponowanych w [RCSB PDB](https://www.rcsb.org/):
 
@@ -117,7 +117,7 @@ Dwa niedopasowania i dziesięć identycznych pozycji dają **Score = 8**.
 python Needleman_wunsch_alg.py examples/DNA_ex.fasta --output dna_output.txt
 ```
 
-### 5.3. Ubikwityna — `ubikwityna.fasta`
+### 5.3. Ubikwityna `ubikwityna.fasta`
 
 Porównanie sekwencji ludzkiej ubikwityny o długości 76 aminokwasów:
 
@@ -130,7 +130,7 @@ Otrzymano 75 identycznych pozycji i jedną substytucję, bez luk: **Score = 74**
 python Needleman_wunsch_alg.py examples/ubikwityna.fasta --output protein_output.txt
 ```
 
-### 5.4. Wiele optymalnych dopasowań — `more_align.fasta`
+### 5.4. Wiele optymalnych dopasowań `more_align.fasta`
 
 
 ```fasta
@@ -151,12 +151,12 @@ AGCTTG    AGCTTG    AGCTTG    AGCTTG
 python Needleman_wunsch_alg.py examples/more_align.fasta --output more_align_output.txt
 ```
 
-### 5.5. Neuropeptydy — `oxy_vas.fasta`
+### 5.5. Neuropeptydy `oxy_vas.fasta`
 
 Porównano sekwencje aminokwasowe dwóch ludzkich neuropeptydów:
 
-- **Oksytocyna** — `CYIQNCPLG`.
-- **Argininowa wazopresyna** — `CYFQNCPRG`
+- **Oksytocyna** `CYIQNCPLG`.
+- **Argininowa wazopresyna** `CYFQNCPRG`
 
 Oba neuropeptydy mają 9 reszt i różnią się w pozycjach 3 oraz 8. Siedem identycznych pozycji i dwa różniące się aminokwasy dają **Score = 5**. 
 Pomimo dużego podobieństwa sekwencji peptydy pełnią różne funkcje fizjologiczne.
@@ -167,4 +167,4 @@ python Needleman_wunsch_alg.py examples/oxy_vas.fasta --output neuropeptydy.txt
 
 
 ## 6. Źródła
-- [RCSB Protein Data Bank](https://www.rcsb.org/) — struktury [1BNA](https://www.rcsb.org/structure/1BNA), [2DND](https://www.rcsb.org/structure/2DND), [1UBQ](https://www.rcsb.org/structure/1UBQ), [2RSU](https://www.rcsb.org/structure/2RSU).
+- [RCSB Protein Data Bank](https://www.rcsb.org/) struktury [1BNA](https://www.rcsb.org/structure/1BNA), [2DND](https://www.rcsb.org/structure/2DND), [1UBQ](https://www.rcsb.org/structure/1UBQ), [2RSU](https://www.rcsb.org/structure/2RSU).
