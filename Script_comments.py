@@ -40,7 +40,7 @@ def needleman_wunsch(seq1, seq2): #funkcja przyjmuje dwie sekwencje
             #obliczenie możliwych wartości z 3 kierunków: 
             # przekątna 
             # góra 
-            # dół 
+            # lewo
             diagonal = M[i-1, j-1] + s 
             up = M[i-1,j] + gap 
             left = M[i, j-1] + gap 

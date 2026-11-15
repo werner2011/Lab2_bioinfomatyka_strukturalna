@@ -1,47 +1,57 @@
-# Laboratorium — algorytm Needlemana–Wunscha
+# Needleman–Wunsch — globalne dopasowanie sekwencji
+Punkt II - część projektowa
+Program implementuje w Pythonie algorytm Needlemana–Wunscha, służący do **globalnego dopasowywania dwóch sekwencji biologicznych**. 
 
-Implementacja **algorytmu Needlemana–Wunscha** do globalnego dopasowywania par sekwencji biologicznych (nukleotydowych/aminokwasowych).
+Algorytm wyznacza optymalną punktację za pomocą programowania dynamicznego, a następnie odtwarza **wszystkie optymalne dopasowania** metodą rekurencyjną *traceback*.
 
-Algorytm wykorzystuje **programowanie dynamiczne** do wyznaczenia maksymalnej punktacji dopasowania. Następnie wykonuje *traceback*, odtwarzając **optymalne dopasowania**.
-
-## 1. Wymagania
+## 1. Wymagania i instalacja
 
 - Python 3
-- NumPy
-- Biopython
+- Numpy
+- Biopython do odczytu plików FASTA (`Bio.SeqIO`)
 
-Instalacja wymaganych bibliotek:
+`argparse` i `pathlib` są częścią standardowej biblioteki Pythona, więc nie wymagają instalacji.
+
+### 1.1. Pobranie projektu
+
+
+```bash
+git clone https://github.com/werner2011/Lab2_bioinfomatyka_strukturalna.git
+```
+
+### 1.2. Utworzenie środowiska i instalacja bibliotek
 
 ```bash
 python -m pip install -r requirements.txt
 ```
 
-
-## 2. Uruchomienie
-
-Uruchomienie z plikiem FASTA:
+## 2. Uruchamianie 
 
 ```bash
 python Needleman_wunsch_alg.py examples/para_sekwencji.fasta
 ```
 
-Zapis do pliku tekstowego:
+Zapis do wybranego pliku .txt:
 
 ```bash
-python Needleman_wunsch_alg.py examples/para_sekwencji.fasta --output examples/output.txt
+python Needleman_wunsch_alg.py examples/para_sekwencji.fasta --output output.txt
 ```
 
-Wyświetlenie macierzy punktacji w terminalu:
+Wyświetlenie macierzy w terminalu
 
 ```bash
 python Needleman_wunsch_alg.py examples/para_sekwencji.fasta --matrix
 ```
 
-## 3. Format danych wejściowych
+Informacje o wymaganych argumentach
 
-Program oczekuje **jednego pliku FASTA zawierającego dwie sekwencje**. Pierwsza sekwencja jest traktowana jako `Query`, druga jako `Target`.
+```bash
+python Needleman_wunsch_alg.py --help
+```
 
-Przykład — `examples/para_sekwencji.fasta`:
+## 3. Format danych wejściowych i wyjściowych
+
+Program odczytuje **jeden plik FASTA z dokładnie dwoma rekordami**. Pierwszy to `Query`, a drugi `Target`. Przykład `examples/para_sekwencji.fasta`:
 
 ```fasta
 >query
@@ -50,87 +60,111 @@ AACG
 AATCG
 ```
 
-
-## 4. System punktowania i zasada działania
-
-| Zdarzenie | Punktacja |
-|---|---:|
-| Match — identyczne symbole | +1 |
-| Mismatch — różne symbole | −1 |
-| Gap — pojedyncza pozycja luki | −2 |
-
-Algorytm składa się z trzech etapów:
-
-1. **Inicjalizacja macierzy:** pierwszy wiersz i pierwsza kolumna otrzymują kolejne kary za luki.
-2. **Programowanie dynamiczne:** każda komórka przyjmuje maksimum z trzech przejść: po przekątnej, z góry i z lewej.
-3. **Traceback:** odtwarzane są ścieżki prowadzące do optymalnej punktacji, w tym wszystkie równorzędne rozwiązania.
-
-Rekordy FASTA są odczytywane przy pomocy `Bio.SeqIO`.
-
-## 5. Przykłady 
-
-W katalogu `examples/` znajdują się trzy pliki FASTA 
-
-### 5.1. Plik — `para_sekwencji.fasta`
-
-Sekwencje: `AACG` (Query) i `AATCG` (Target).
+Program zapisuje punktację, liczbę optymalnych dopasowań i wszystkie otrzymane pary sekwencji. Dla wyżej wymienionego pliku oczekiwany wynik to:
 
 ```text
-Query:  AA-CG
+Query: AACG
 Target: AATCG
+Score: 2
+Liczba dopasowan: 1
+
+Dopasowanie 1:
+AA-CG
+AATCG
 ```
 
-- **Wynik:** 2
-- **Liczba optymalnych dopasowań:** 1
+## 4. Metoda i system punktowania
 
-Uruchomienie:
+| | Punktacja |
+|---|---:|
+| Match - identyczne symbole | +1 |
+| Mismatch - różne symbole | -1 |
+| Gap - każda pozycja luki | -2 |
 
-```bash
-python Needleman_wunsch_alg.py examples/para_sekwencji.fasta
-```
+Algorytm przebiega w trzech etapach:
 
-### 5.2. Sekwencje DNA — `DNA_ex.fasta`
+1. **Inicjalizacja** - utworzenie macierzy `(n+1) x (m+1)` i wypełnienie jej pierwszego wiersza oraz kolumny karami za luki.
+2. **Programowanie dynamiczne** — wypełnianie macierzy maksimum z trzech możliwości: przejścia z przekątnej, z góry i z lewej.
+3. **Traceback** — cofanie od prawego dolnego rogu do `(0, 0)`
 
-Porównano dwie sekwencje DNA, których struktury znajdują się w bazie PDB:
 
-- **[2DND](https://www.rcsb.org/structure/2DND):** 
-- **[1BNA](https://www.rcsb.org/structure/1BNA):** 
+## 5. Przykłady użycia
+
+
+### 5.1. `para_sekwencji.fasta`
 
 ```text
-2DND: CGCAAATTTGCG
-1BNA: CGCGAATTCGCG
+AA-CG
+AATCG
 ```
 
-- **Wynik:** 8
-- **Liczba optymalnych dopasowań:** 1
-
-Uruchomienie:
+Cztery identyczne symbole i jedna luka: `4 × (+1) + (−2) = 2`.
 
 ```bash
-python Needleman_wunsch_alg.py examples/DNA_ex.fasta --output DNA_output.txt
+python Needleman_wunsch_alg.py examples/para_sekwencji.fasta --output output.txt
 ```
 
-### 5.3. Sekwencje ubikwityny — `ubikwityna.fasta`
+### 5.2. Dodekamery DNA — `DNA_ex.fasta`
 
-Porównano dwie sekwencje o długości **76 aminokwasów**:
+Sekwencje pochodzą ze struktur zdeponowanych w [RCSB PDB](https://www.rcsb.org/):
 
-- **[1UBQ](https://www.rcsb.org/structure/1UBQ):** ubikwityna typu dzikiego; struktura wyznaczona metodą krystalografii rentgenowskiej.
-- **[2RSU](https://www.rcsb.org/structure/2RSU):** wariant ubikwityny **Q41N**; struktura wyznaczona metodą NMR.
+- [2DND](https://www.rcsb.org/structure/2DND): `CGCAAATTTGCG`
+- [1BNA](https://www.rcsb.org/structure/1BNA): `CGCGAATTCGCG` 
 
-Wariant Q41N zawiera substytucję **glutaminy (Q) na asparaginę (N) w pozycji 41**.
-
-- **Wynik:** 74
-- **Liczba optymalnych dopasowań:** 1
-- **Interpretacja:** 75 identycznych aminokwasów, jedna substytucja, nie wykryto luk.
-
-Uruchomienie:
+Dwa niedopasowania i dziesięć identycznych pozycji dają **Score = 8**.
 
 ```bash
-python Needleman_wunsch_alg.py examples/ubikwityna.fasta --output ubikwityna_output.txt
+python Needleman_wunsch_alg.py examples/DNA_ex.fasta --output dna_output.txt
+```
+
+### 5.3. Ubikwityna — `ubikwityna.fasta`
+
+Porównanie sekwencji ludzkiej ubikwityny o długości 76 aminokwasów:
+
+- [PDB 1UBQ](https://www.rcsb.org/structure/1UBQ)
+- [PDB 2RSU](https://www.rcsb.org/structure/2RSU)
+
+Otrzymano 75 identycznych pozycji i jedną substytucję, bez luk: **Score = 74**.
+
+```bash
+python Needleman_wunsch_alg.py examples/ubikwityna.fasta --output protein_output.txt
+```
+
+### 5.4. Wiele optymalnych dopasowań — `more_align.fasta`
+
+
+```fasta
+>query
+AGGTC
+>target
+AGCTTG
+```
+
+Program znajduje **4 różne dopasowania** z tą samą punktacją **−1**:
+
+```text
+AG-GTC    AGG-TC    AGGT-C    AGGTC-
+AGCTTG    AGCTTG    AGCTTG    AGCTTG
+```
+
+```bash
+python Needleman_wunsch_alg.py examples/more_align.fasta --output more_align_output.txt
+```
+
+### 5.5. Neuropeptydy — `oxy_vas.fasta`
+
+Porównano sekwencje aminokwasowe dwóch ludzkich neuropeptydów:
+
+- **Oksytocyna** — `CYIQNCPLG`.
+- **Argininowa wazopresyna** — `CYFQNCPRG`
+
+Oba neuropeptydy mają 9 reszt i różnią się w pozycjach 3 oraz 8. Siedem identycznych pozycji i dwa różniące się aminokwasy dają **Score = 5**. 
+Pomimo dużego podobieństwa sekwencji peptydy pełnią różne funkcje fizjologiczne.
+
+```bash
+python Needleman_wunsch_alg.py examples/oxy_vas.fasta --output neuropeptydy.txt
 ```
 
 
-
-## Źródła
-
-- [RCSB Protein Data Bank](https://www.rcsb.org/) - rekordy struktur [1BNA](https://www.rcsb.org/structure/1BNA), [2DND](https://www.rcsb.org/structure/2DND), [1UBQ](https://www.rcsb.org/structure/1UBQ) i [2RSU](https://www.rcsb.org/structure/2RSU).
+## 6. Źródła
+- [RCSB Protein Data Bank](https://www.rcsb.org/) — struktury [1BNA](https://www.rcsb.org/structure/1BNA), [2DND](https://www.rcsb.org/structure/2DND), [1UBQ](https://www.rcsb.org/structure/1UBQ), [2RSU](https://www.rcsb.org/structure/2RSU).

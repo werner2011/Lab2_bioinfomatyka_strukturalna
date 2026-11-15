@@ -64,8 +64,8 @@ def main():
     if len(rekordy) !=2: 
         parser.error("Plik musi zawierac dwie sekwencje!") 
 
-    query = str(rekordy[0].seq)
-    target = str(rekordy[1].seq) 
+    query = str(rekordy[0].seq).upper()
+    target = str(rekordy[1].seq).upper() 
 
     M, dopasowania = needleman_wunsch(query, target) 
     if args.matrix:
@@ -80,7 +80,7 @@ def main():
         
         for k, (a, b) in enumerate(dopasowania, 1):
             file.write(f"Dopasowanie {k}:\n")
-            file.write(f"{a}\n{b}\n")
+            file.write(f"{a}\n{b}\n\n")
 
     print(f"\nScore: {M[-1,-1]}") 
     print(f"Liczba dopasowan: {len(dopasowania)}") 

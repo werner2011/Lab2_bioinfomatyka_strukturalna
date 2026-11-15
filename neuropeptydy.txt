@@ -1,0 +1,8 @@
+Query: CYIQNCPLG
+Target: CYFQNCPRG
+Score: 5
+Liczba dopasowan: 1
+
+Dopasowanie 1:
+CYIQNCPLG
+CYFQNCPRG
