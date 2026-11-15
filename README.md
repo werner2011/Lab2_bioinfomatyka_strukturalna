@@ -98,7 +98,6 @@ AA-CG
 AATCG
 ```
 
-Cztery identyczne symbole i jedna luka: `4 × (+1) + (−2) = 2`.
 
 ```bash
 python Needleman_wunsch_alg.py examples/para_sekwencji.fasta --output output.txt
@@ -140,7 +139,7 @@ AGGTC
 AGCTTG
 ```
 
-Program znajduje **4 różne dopasowania** z tą samą punktacją **−1**:
+Program znajduje **4 różne dopasowania**:
 
 ```text
 AG-GTC    AGG-TC    AGGT-C    AGGTC-
